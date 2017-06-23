@@ -1,0 +1,110 @@
+
+<script>
+    //Load de Action
+    (function() {
+        
+        //Menu Izquierdo
+        BDConsultaOBJ("SELECT * FROM APP_EMPRESA;", function (obj) {
+            for (var i = 0; i < obj.rows.length; i++) {
+                var row = obj.rows.item(i);
+                if(i==0){
+                    masterEmpresa=row.RAZONSOCIAL
+                    $("#AppGestorEmpresa").html(masterEmpresa);
+                 }
+            }
+        });
+        
+        //Option Initial
+        loadOption('App_content','10000000');
+        loadOption('ConfigPanel','10000400');
+        loadOption('ActionPanel','10000500');
+    })();
+
+    document.addEventListener("backbutton", onBackKeyDown);
+
+    function onBackKeyDown()
+    {
+        navigator.notification.confirm('¿Salir de la aplicación?',function(button) {
+          if (button == 2) {
+            navigator.app.exitApp();
+          }
+        },'Salir', 'No,Si');return false;
+    } 
+    
+    function CerrarSesion() 
+    {
+        var res = confirm("¿Seguro desea Cerrar Sesion?")
+        if(res==true){
+            BDActualizacion("UPDATE APP_USUARIO SET ACTIVO='I'");
+            contentPage('pages/login.html');
+        }
+    }
+
+    function CargaEmpresas()
+    {
+        $("#listEmp").html('<li data-role="list-divider">Seleccionar Empresa</li>');
+        BDConsultaOBJ("SELECT * FROM APP_EMPRESA ORDER BY RAZONSOCIAL ASC;", function (obj) {
+            for (var i = 0; i < obj.rows.length; i++) {
+                var row = obj.rows.item(i);
+                var active = (masterEmpresa!=row.RAZONSOCIAL)? "cus-pri-deg-ele":"cus-war-ele" ;
+
+                $("#listEmp").append('<li><a href="#" class="'+ active +'" style="margin: 10px;padding: 15px 30px;" onclick="cambioEmpresa(\'' + row.RAZONSOCIAL + '\')" data-rel="back">'+ row.RAZONSOCIAL +'</a></li>');
+            }
+            $('#listEmp').listview('refresh');
+        });
+    }
+
+    function cambioEmpresa(newEmpresa){
+        $("#loader_sys_btn_show").click();
+        if(masterEmpresa!=newEmpresa){
+            masterEmpresa=newEmpresa;
+            $("#AppGestorEmpresa").html(masterEmpresa);
+            loadOption('App_content','10000000');
+        }
+        $("#loader_sys_btn_hide").click();
+    }
+
+</script>
+
+<style type="text/css">
+    #content_master
+    {
+        background: #ecf0f5;
+        padding-top: 82px;
+    }
+
+    #containerEmp .ui-title
+    {
+        margin: 0 0% !important;
+    }
+</style>
+
+<div data-role="header" class="cus-lg-header cus-pri-ele" data-position="fixed" data-theme="a">
+    <div class="ui-grid-b">
+        <div class="ui-block-a">
+            <a href="#insideL" class=" ui-btn ui-icon-bars ui-btn-icon-notext cus-btn-sin-radius cus-btn-icon-notext cus-pri-ele" style="border-color: #003763;padding: 20px 18px;margin: 0px"></a>
+        </div>
+        <div class="ui-block-b" style="text-align: right;padding: 8px 0px">
+            <a href="#popupEmp" class="ui-btn ui-icon-delete ui-corner-all cus-war-ele" style="border: 0;width: 80%;" data-rel="popup" data-transition="pop" onclick="CargaEmpresas();"><strong id="AppGestorEmpresa" style="font-size: 16px;"></strong></a>
+        </div>
+        <div class="ui-block-c" style="text-align: right;">
+            <a href="#insideR" class=" ui-btn ui-icon-gear ui-btn-icon-notext cus-btn-sin-radius cus-btn-icon-notext cus-pri-ele" style="border-color: #003763;padding: 20px 18px;margin: 0px"></a>
+        </div>
+    </div>
+</div>
+
+<div role="main" class="ui-content jqm-content jqm-fullwidth" id="App_content">
+</div>
+
+<div id ="ActionPanel"></div>
+
+<div id ="ConfigPanel"></div>
+
+<div id="containerEmp" style="display: none">
+    <div data-role="popup" id="popupEmp" data-theme="a">
+        <ul data-role="listview" data-inset="true" style="min-width:210px;" id="listEmp">
+        </ul>
+    </div>
+</div>
+
+          
