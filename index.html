@@ -51,10 +51,8 @@
     <script type="text/javascript">
         (function() {
             app.initialize();      
-            setTimeout(function() {
-                contentPage('pages/login.html');                 
-                app.onDeviceReady();
-            }, 500);      
+            contentPage('pages/login.html');                 
+            app.onDeviceReady();
         })();
         
         $(document).on( "click", ".show-page-loading-msg", function() {

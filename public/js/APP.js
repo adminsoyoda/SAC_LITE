@@ -4,10 +4,10 @@ var masterUsuario = "";
 
 //Contenedor General
 function contentPage(ContenedorGlobal) {
-
+    alert("1");
     $("#content_master").hide();
     $.get(ContenedorGlobal).success(function(html) {
-        alert("aqui")
+        alert("success");
         $('#content_master').show(200);  
         $('#content_master').html(html);
     }).fail(function() {
