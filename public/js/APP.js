@@ -4,7 +4,9 @@ var masterUsuario = "";
 
 //Contenedor General
 function contentPage(ContenedorGlobal) {
-    alert(ContenedorGlobal);
+    alert( $("#content_master").html() );
+ 
+    $("#content_master").html("");
 
     $("#content_master").hide();
     $("#content_master").html("ContenedorGlobal");
