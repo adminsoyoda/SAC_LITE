@@ -7,7 +7,7 @@ function contentPage(ContenedorGlobal) {
     alert(ContenedorGlobal);
 
     $("#content_master").hide();
-    $("#content_master").html(ContenedorGlobal);
+    $("#content_master").html("ContenedorGlobal");
     $("#content_master").show();
     /*$("#content_master").load( ContenedorGlobal, function( response, status, xhr ) 
     {
