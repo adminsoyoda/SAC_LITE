@@ -50,9 +50,11 @@
 
     <script type="text/javascript">
         (function() {
-            alert("aquiiiiiiii1111");
-            app.initialize();            
-            contentPage('pages/login.html');             
+            app.initialize();      
+            setTimeout(function() {
+                contentPage('pages/login.html');                 
+                app.onDeviceReady();
+            }, 500);      
         })();
         
         $(document).on( "click", ".show-page-loading-msg", function() {
