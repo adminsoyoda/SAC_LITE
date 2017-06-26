@@ -4,23 +4,22 @@ var masterUsuario = "";
 
 //Contenedor General
 function contentPage(ContenedorGlobal) {
-    alert("1");
-    $("#content_master").hide();
-    $.get(ContenedorGlobal).success(function(html) {
-        alert("success");
-        $('#content_master').show(200);  
-        $('#content_master').html(html);
-    }).fail(function() {
-        alert( "error" );
-    });
+    alert(ContenedorGlobal);
 
-    /*$("#content_master").hide();
-    $("#content_master").load(ContenedorGlobal, function () {
-        setTimeout(function(){
-            $('#content_master').show(200);  
-            $( "div[id=content_master]" ).page( "destroy" ).page();
-        }, 500); 
-    });*/
+    $("#content_master").hide();
+    $("#content_master").load( ContenedorGlobal, function( response, status, xhr ) {
+        if ( status == "error" ) 
+        {
+            alert( "Error: " + xhr.status + " " + xhr.statusText );
+        }
+        else
+        {
+            setTimeout(function(){
+                $('#content_master').show(200);  
+                $( "div[id=content_master]" ).page( "destroy" ).page();
+            }, 500);
+        }
+    });
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
