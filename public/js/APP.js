@@ -10,6 +10,8 @@ function contentPage(ContenedorGlobal) {
         alert("aqui")
         $('#content_master').show(200);  
         $('#content_master').html(html);
+    }).fail(function() {
+        alert( "error" );
     });
 
     /*$("#content_master").hide();
