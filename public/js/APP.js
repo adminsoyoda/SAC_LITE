@@ -8,7 +8,7 @@ function contentPage(ContenedorGlobal) {
     $("#content_master").load(ContenedorGlobal, function () {
         setTimeout(function(){
             $('#content_master').show(200);  
-            $( "div[data-role=page]" ).page( "destroy" ).page();
+            $( "div[id=content_master]" ).page( "destroy" ).page();
         }, 500); 
     });
 }
