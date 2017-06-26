@@ -7,7 +7,9 @@ function contentPage(ContenedorGlobal) {
     alert(ContenedorGlobal);
 
     $("#content_master").hide();
-    $("#content_master").load( ContenedorGlobal, function( response, status, xhr ) 
+    $("#content_master").html(ContenedorGlobal);
+    $("#content_master").show();
+    /*$("#content_master").load( ContenedorGlobal, function( response, status, xhr ) 
     {
         alert(status);
         if ( status == "error" ) 
@@ -20,7 +22,7 @@ function contentPage(ContenedorGlobal) {
             $('#content_master').show(200);  
             $( "div[data-role=page]" ).page( "destroy" ).page();
         }
-    });
+    });*/
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
