@@ -4,6 +4,7 @@ var masterUsuario = "";
 
 //Contenedor General
 function contentPage(ContenedorGlobal) {
+    alert("2");
     $("#content_master").hide();
     $("#content_master").load(ContenedorGlobal, function () {
         setTimeout(function(){
