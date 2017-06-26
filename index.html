@@ -25,20 +25,24 @@
         
         <link href="public/css/jQuery/jquery-ui.css" rel="stylesheet" />
 
-        <title>Hello World</title>
+        <title>SAC</title>
     </head>
+
     <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
+    NADA
+        <div data-role="page" id="content_master"></div>
+        <div id='loader_lock' style='position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999999999; display: none;'> 
+            <div id='sync_sys' style='display:none' ></div>
+            <button id="loader_sys_btn_show" class="show-page-loading-msg cus-display-none" data-theme="b" data-align="center" data-textonly="true" data-textvisible="true" data-msgtext="Custom Loader" data-html="<div style='text-align:center'><span class='ui-bar ui-shadow ui-overlay-d ui-corner-all'><img src='public/img/loading.gif' style='width: 50px;'><h2>Espere por favor...</h2></span></div>" data-iconpos="right"></button>
+            <button class="hide-page-loading-msg cus-display-none" id="loader_sys_btn_hide"></button>
+        </div>
+        <div class="app" style='display:none'> 
+            <div id="message_sync">...</div>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
-            </div>
+            </div>   
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
     </body>
+
 </html>
