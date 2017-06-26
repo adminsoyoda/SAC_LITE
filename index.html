@@ -23,6 +23,64 @@
         
         <link href="public/css/jQuery/jquery-ui.css" rel="stylesheet" />
 
+        <script type="text/javascript">
+            (function() {
+                app.initialize();      
+                setTimeout(function() {
+                    contentPage('pages/login.html');                 
+                    app.onDeviceReady();    
+                }, 200);
+            })();
+            
+            $(document).on( "click", ".show-page-loading-msg", function() {
+                var $this = $( this ),
+                theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+                msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+                textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+                textonly = !!$this.jqmData( "textonly" );
+                html = $this.jqmData( "html" ) || "";
+                $.mobile.loading( 'show', {
+                  text: msgText,
+                  textVisible: textVisible,
+                  theme: theme,
+                  textonly: textonly,
+                  html: html
+                });
+                $("#loader_lock").show();
+            })
+            .on( "click", ".hide-page-loading-msg", function() {
+                $.mobile.loading( "hide" );
+                $("#loader_lock").hide();
+            });
+
+            function getCoordenatesGPS(){
+               
+                objGps.continueGps(function(){//valida si gps esta activo
+                     
+                     var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
+                     db.transaction(function(tx){
+                         tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
+                            var NEW_ID=results.insertId;
+                            document.getElementById("ID_ORDEN").value = NEW_ID;
+                            ///enviar actualizacion para obtener coordendas
+                            objGps.getCoordenates(function(){},function(){},true,"update orden_venta set LONGITUD={LONGITUD},PRECISION={PRECISION},LATITUD={LATITUD} where ID="+NEW_ID+"");
+                            
+                    });
+                 });
+               },function(){});                           
+            }
+
+            function readGPS(){
+                var NEW_ID=document.getElementById("ID_ORDEN").value;
+                BDConsulta("select ID,LONGITUD,LATITUD,PRECISION from orden_venta where ID="+NEW_ID+"",function(row){
+                   alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]);
+                });
+                BDConsulta("select ID,LONGITUD,LATITUD,PRECISION,ESTADO,FECHA_CREACION,ULTIMA_FECHA from APP_GPS_REGISTRO where ID="+NEW_ID+"",function(row){
+                   alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+",E:"+row["ESTADO"]+",FAC:"+row["FECHA_CREACION"]+",Fult:"+row["ULTIMA_FECHA"]);
+                });
+            }      
+        </script>
+
         <title>SAC</title>
     </head>
 
@@ -44,62 +102,6 @@
                 <p class="event received">Device is Ready</p>
             </div>   
         </div>
-    </body>
-
-    <script type="text/javascript">
-        (function() {
-            app.initialize();      
-            contentPage('pages/login.html');                 
-            app.onDeviceReady();
-        })();
-        
-        $(document).on( "click", ".show-page-loading-msg", function() {
-            var $this = $( this ),
-            theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
-            msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
-            textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
-            textonly = !!$this.jqmData( "textonly" );
-            html = $this.jqmData( "html" ) || "";
-            $.mobile.loading( 'show', {
-              text: msgText,
-              textVisible: textVisible,
-              theme: theme,
-              textonly: textonly,
-              html: html
-            });
-            $("#loader_lock").show();
-        })
-        .on( "click", ".hide-page-loading-msg", function() {
-            $.mobile.loading( "hide" );
-            $("#loader_lock").hide();
-        });
-
-        function getCoordenatesGPS(){
-           
-            objGps.continueGps(function(){//valida si gps esta activo
-                 
-                 var db = window.openDatabase(DATABASE_NAME, DATABASE_VERSION, DATABASE_DESCRIPTION, DATABASE_SIZE);
-                 db.transaction(function(tx){
-                     tx.executeSql("INSERT INTO orden_venta(DESCRIPCION)VALUES(?)", ['ES UNA ORDEN DE VENTA FICTICIO O REGISTRO DE PRUEBA'], function(tx,results){
-                        var NEW_ID=results.insertId;
-                        document.getElementById("ID_ORDEN").value = NEW_ID;
-                        ///enviar actualizacion para obtener coordendas
-                        objGps.getCoordenates(function(){},function(){},true,"update orden_venta set LONGITUD={LONGITUD},PRECISION={PRECISION},LATITUD={LATITUD} where ID="+NEW_ID+"");
-                        
-                });
-             });
-           },function(){});                           
-        }
-
-        function readGPS(){
-            var NEW_ID=document.getElementById("ID_ORDEN").value;
-            BDConsulta("select ID,LONGITUD,LATITUD,PRECISION from orden_venta where ID="+NEW_ID+"",function(row){
-               alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]);
-            });
-            BDConsulta("select ID,LONGITUD,LATITUD,PRECISION,ESTADO,FECHA_CREACION,ULTIMA_FECHA from APP_GPS_REGISTRO where ID="+NEW_ID+"",function(row){
-               alert("LONGITUD:"+row["LONGITUD"]+",LATITUD:"+row["LATITUD"]+",PRECISION:"+row["PRECISION"]+",E:"+row["ESTADO"]+",FAC:"+row["FECHA_CREACION"]+",Fult:"+row["ULTIMA_FECHA"]);
-            });
-        }      
-    </script>
+    </body>   
 
 </html>

@@ -7,7 +7,9 @@ function contentPage(ContenedorGlobal) {
     alert(ContenedorGlobal);
 
     $("#content_master").hide();
-    $("#content_master").load( ContenedorGlobal, function( response, status, xhr ) {
+    $("#content_master").load( ContenedorGlobal, function( response, status, xhr ) 
+    {
+        alert(status);
         if ( status == "error" ) 
         {
             alert( "Error: " + xhr.status + " " + xhr.statusText );
@@ -16,7 +18,7 @@ function contentPage(ContenedorGlobal) {
         {
             alert( "Correcto" );
             $('#content_master').show(200);  
-            $( "div[id=content_master]" ).page( "destroy" ).page();
+            $( "div[data-role=page]" ).page( "destroy" ).page();
         }
     });
 }
