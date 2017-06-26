@@ -6,10 +6,9 @@ var masterUsuario = "";
 function contentPage(ContenedorGlobal) {
     alert(ContenedorGlobal);
 
-    $("div[data-role=page]" ).hide();
-    $("div[data-role=page]" ).html("ContenedorGlobal");
-    $("div[data-role=page]" ).page( "destroy" ).page();
-    $("div[data-role=page]" ).show();
+    $("#content_master").hide();
+    $("#content_master").html("ContenedorGlobal");
+    $("#content_master").show();
     /*$("#content_master").load( ContenedorGlobal, function( response, status, xhr ) 
     {
         alert(status);
