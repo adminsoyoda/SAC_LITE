@@ -14,10 +14,9 @@ function contentPage(ContenedorGlobal) {
         }
         else
         {
-            setTimeout(function(){
-                $('#content_master').show(200);  
-                $( "div[id=content_master]" ).page( "destroy" ).page();
-            }, 500);
+            alert( "Correcto" );
+            $('#content_master').show(200);  
+            $( "div[id=content_master]" ).page( "destroy" ).page();
         }
     });
 }
