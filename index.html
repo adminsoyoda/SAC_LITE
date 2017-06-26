@@ -49,13 +49,11 @@
     </body>
 
     <script type="text/javascript">
-    alert("aquii0000000");
-
-        $(document).ready(function(){
+        (function() {
             alert("aquiiiiiiii1111");
             app.initialize();            
             contentPage('pages/login.html');             
-        });
+        })();
         
         $(document).on( "click", ".show-page-loading-msg", function() {
             var $this = $( this ),
